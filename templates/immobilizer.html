@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <input type="hidden" name="immobilizer-page" id="immobilizer-page">
+    <div class="container-fluid">
+        <div class="row page-titles">
+            <div class="col-md-5 col-8 align-self-center">
+                <h3 class="text-themecolor m-b-0 m-t-0">{{ page_title }}</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card pb-0  mb-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <input type="text" id="schedule-name" class="form-control" placeholder="Schedule Name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row mb-3">
+                                    <div class="col-md-12">
+                                        <input type="text" class="form-control" id="date-time" placeholder="Date & Time" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <input type="text" class="form-control text-center" id="vehicle-count" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row mb-3">
+                                    <div class="col-md-6 pl-0">
+                                        <button type="button" class="btn btn-outline-danger ml-2 mr-1" id="turn-off">
+                                            <i class="fa fa-power-off pr-1"></i> Immobilize
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 pl-0">
+                                        <button type="button" class="btn btn-outline-success ml-2 mr-1" id="turn-on">
+                                            <i class="fa fa-key pr-1"></i> Mobilize
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table id="immobilizer-table" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>S NO</th>
+                                        <th>ID</th>
+                                        <th>RTO NO</th>
+                                        <th>TYPE</th>
+                                        <th>NAME</th>
+                                        <th>DRIVER NAME</th>
+                                        <th>CITY</th>
+                                        <th>SIM NO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for vehicle in vehicle_list %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ vehicle.id or 'Empty..!' }}</td>
+                                        <td>{{ vehicle.rto or 'Empty..!' }}</td>
+                                        <td>{{ vehicle.vehicle_type or 'Empty..!' }}</td>
+                                        <td>{{ vehicle.disp_name or 'Empty..!' }}</td>
+                                        <td>{{ vehicle.driver_name or 'Empty..!' }}</td>
+                                        <td>{{ vehicle.city or 'Empty..!' }}</td>
+                                        <td>{{ vehicle.sim or 'Empty..!' }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Schedule Modal -->
+        {% include 'modal_schedule.html' %}
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
